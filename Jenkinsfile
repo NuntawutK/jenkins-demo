@@ -1,27 +1,24 @@
 pipeline {
   agent any
-
   stages {
     stage('Clone') {
       steps {
         checkout scm
       }
     }
-
-    stage('Build Docker Image') {
+    stage('Install Dependencies') {
       steps {
-        script {
-          docker.build('assignment5-image')
-        }
+        sh 'pip install -r requirements.txt'
       }
     }
-
-    stage('Run App') {
+    stage('Run Tests') {
       steps {
-        script {
-          sh 'docker rm -f assignment5-container || true'
-          sh 'docker run -d --name assignment5-container -p 5000:5000 assignment5-image'
-        }
+        sh 'pytest'
+      }
+    }
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build -t my-python-app .'
       }
     }
   }
