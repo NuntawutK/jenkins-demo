@@ -1,10 +1,11 @@
 pipeline {
-  agent {
-        docker {
-            image 'python:3.9'
-            args '-v /var/jenkins_home:/var/jenkins_home'
-        }
+  agent any
+  
+  stage('Install Dependencies') {
+    steps {
+        sh 'pip3 install -r requirements.txt'
     }
+}
   stages {
     stage('Clone') {
       steps {
