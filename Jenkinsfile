@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+        docker {
+            image 'python:3.9'
+            args '-v /var/jenkins_home:/var/jenkins_home'
+        }
+    }
   stages {
     stage('Clone') {
       steps {
