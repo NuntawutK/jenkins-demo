@@ -8,7 +8,11 @@ pipeline {
     }
     stage('Install Dependencies') {
       steps {
-        sh 'pip3 install -r requirements.txt'
+                sh '''
+            python3 -m venv venv
+            . venv/bin/activate
+            pip3 install -r requirements.txt
+        '''
       }
     }
     stage('Run Tests') {
